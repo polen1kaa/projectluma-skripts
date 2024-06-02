@@ -1,0 +1,14 @@
+# PolenoBall v1.0.0. by polenikaa
+# Skript, SkBee
+on skript load:
+  register new shaped recipe for player head named "&x&0&0&7&8&F&EМяч" with lore "&7ПКМ + Shift - бросить вверх" and "&7ЛКМ - бросить в сторону" and "&7ПКМ - поднять" with nbt compound from "{display:{Name:""{\""text\"":\""&fМяч\""}""},SkullOwner:{Id:[I;-1869095044,-89897662,-1204878200,-1158421545],Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2M0NGZiOWI5MDcyOGUwMjY0NGNkNDM2NTQ5N2EyOWU2YzgyZWJiNzI3MTkxYTc5ODc3YzkzYWFhZDE2YjEzIn19fQ==""}]}}}" using string, leather, string, leather, slime block, leather, string, leather and string with id "poleno_ball"
+on place of a player head:
+  if first element of (lore of event-item) is "&7ПКМ + Shift - бросить вверх":
+    send "ok" to player
+    cancel event
+    remove player's tool from the player
+    spawn a armor stand at the target block's location with nbt from "{CustomName:'{""text"":""polenoball""}',CustomNameVisible:0b}"
+on rightclick on a armor stand:
+  if player is sneaking:
+    if event-entity's display name is "polenoball":
+      push the event-entity upwards with force 1
