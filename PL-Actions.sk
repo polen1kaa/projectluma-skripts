@@ -1,0 +1,33 @@
+command /d20:
+	cooldown: 5 seconds
+	cooldown message: &c☽ » Не так быстро! подожди ещё %remaining time%
+	trigger:
+		send "<##f3d14e>🔥 <##f7de79>%player% <##f3d14e>выкинул многогранник и выбил <##f7de79>%random integer from 1 to 20%<##f3d14e>!" to all players
+command /gme <text>:
+    cooldown: 5 seconds
+    cooldown message: &c☽ » Не так быстро! подожди ещё %remaining time%
+    trigger: 
+        send "&6* &r%player% %arg-1% &6*" to all players
+command /space <player>:
+	permission: pl.space
+	trigger:
+		push arg-1 forwards with force 2
+command /smert <player>:
+	permission: op
+	trigger:
+		execute console command "damage %arg-1% 2 explosion"
+		wait 0.6 seconds
+		execute console command "damage %arg-1% 2 explosion"
+		wait 0.6 seconds
+		execute console command "damage %arg-1% 2 explosion"
+		wait 0.6 seconds
+		execute console command "damage %arg-1% 2 explosion"
+		wait 0.6 seconds
+		execute console command "damage %arg-1% 2 explosion"
+		wait 0.6 seconds
+		execute console command "damage %arg-1% 2 explosion"
+		wait 0.6 seconds
+on explode:
+    if event-entity is end crystal:
+        create a safe explosion of force 0.3 at the event-entity
+        cancel event
