@@ -1,0 +1,19 @@
+on eat:
+  chance of 2%:
+    send "&a☽ » Вы пукнули!" to player
+    set {_x} to x coordinate of event-player
+    set {_y} to y coordinate of event-player
+    set {_z} to z coordinate of event-player
+    execute console command "execute at %event-player% run particle minecraft:sneeze %{_x}% %{_y}% %{_z}% 0.7 0.1 0.7 0.1 300 force @a"
+command /fart:
+  cooldown: 30 seconds
+  cooldown message: &c☽ » У вас отсутствуют газы, попробуйте снова через %remaining time%.
+  description: Пукнуть
+  usage: /fart
+  executable by: players
+  trigger:
+    send "&a☽ » Вы напряглись, и пукнули!" to player
+    set {_x} to x coordinate of event-player
+    set {_y} to y coordinate of event-player
+    set {_z} to z coordinate of event-player
+    execute console command "execute at %event-player% run particle minecraft:sneeze %{_x}% %{_y}% %{_z}% 0.5 0.1 0.5 0.1 300 force @a"
