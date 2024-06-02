@@ -1,0 +1,57 @@
+# PLVape 1.0.0 by misterkapysta
+on rightclick holding a goat horn:
+  if player is holding event-item with name "Вейп со вкусом мандарина":
+    set {_x} to x coordinate of player
+    set {_y} to y coordinate of player
+    set {_z} to z coordinate of player
+    execute console command "execute at %player% run particle minecraft:campfire_cosy_smoke %{_x}% %{_y}+1.5% %{_z}% 0.2 0.2 0.2 0.007 6 force @a"
+  if player is holding event-item with name "Вейп со вкусом яблока":
+    set {_x} to x coordinate of player
+    set {_y} to y coordinate of player
+    set {_z} to z coordinate of player
+    execute console command "execute at %player% run particle minecraft:campfire_cosy_smoke %{_x}% %{_y}+1.5% %{_z}% 0.2 0.2 0.2 0.007 6 force @a"
+  if player is holding event-item with name "Вейп со вкусом энергетика":
+    set {_x} to x coordinate of player
+    set {_y} to y coordinate of player
+    set {_z} to z coordinate of player
+    execute console command "execute at %player% run particle minecraft:campfire_cosy_smoke %{_x}% %{_y}+1.5% %{_z}% 0.2 0.2 0.2 0.007 6 force @a"
+  if player is holding event-item with name "Вейп со вкусом голубики": 
+    set {_x} to x coordinate of player
+    set {_y} to y coordinate of player
+    set {_z} to z coordinate of player
+    execute console command "execute at %player% run particle minecraft:campfire_cosy_smoke %{_x}% %{_y}+1.5% %{_z}% 0.2 0.2 0.2 0.007 6 force @a"
+  if player is holding event-item with name "Вейп со вкусом Новогодний Микс":
+    set {_x} to x coordinate of player
+    set {_y} to y coordinate of player
+    set {_z} to z coordinate of player
+    execute console command "execute at %player% run particle minecraft:dust 0.91 0.65 0.09 3 %{_x}% %{_y}+1.5% %{_z}% 0.3 0.3 0.3 0.007 8 force @a"
+  if player is holding event-item with name "Вейп со вкусом шкурки":
+    set {_x} to x coordinate of player
+    set {_y} to y coordinate of player
+    set {_z} to z coordinate of player
+    execute console command "execute at %player% run particle minecraft:campfire_cosy_smoke %{_x}% %{_y}+1.5% %{_z}% 0.2 0.2 0.2 0.007 6 force @a"
+  if player is holding event-item with name "Вейп со вкусом явления":
+    set {_x} to x coordinate of player
+    set {_y} to y coordinate of player
+    set {_z} to z coordinate of player
+    execute console command "execute at %player% run particle minecraft:campfire_cosy_smoke %{_x}% %{_y}+1.5% %{_z}% 0.2 0.2 0.2 0.007 6 force @a"
+  if player is holding event-item with name "Вейп со вкусом глинтвейна":
+    set {_x} to x coordinate of player
+    set {_y} to y coordinate of player
+    set {_z} to z coordinate of player
+    execute console command "execute at %player% run particle minecraft:campfire_cosy_smoke %{_x}% %{_y}+1.5% %{_z}% 0.2 0.2 0.2 0.007 6 force @a"
+  if player is holding event-item with name "Вейп со вкусом андрооофокса":
+    set {_x} to x coordinate of player
+    set {_y} to y coordinate of player
+    set {_z} to z coordinate of player
+    execute console command "execute at %player% run particle minecraft:campfire_cosy_smoke %{_x}% %{_y}+1.5% %{_z}% 0.2 0.2 0.2 0.007 6 force @a"
+  if player is holding event-item with name "Мега Вейп со вкусом ежевики":
+    set {_x} to x coordinate of player
+    set {_y} to y coordinate of player
+    set {_z} to z coordinate of player
+    execute console command "execute at %player% run particle minecraft:campfire_cosy_smoke %{_x}% %{_y}+1.5% %{_z}% 0.33 0.33 0.33 0.007 12 force @a"
+  if player is holding event-item with name "Вейп со вкусом Имбирного пряника":
+    set {_x} to x coordinate of player
+    set {_y} to y coordinate of player
+    set {_z} to z coordinate of player
+    execute console command "execute at %player% run particle minecraft:dust 0.64 0.44 0.22 3 %{_x}% %{_y}+1.5% %{_z}% 0.3 0.3 0.3 0.007 8 force @a"		
