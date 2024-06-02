@@ -1,0 +1,12 @@
+command /poop:
+  cooldown: 60 seconds
+  cooldown message: &c☽ » У вас отсутствует биоматериал, попробуйте снова через %remaining time%.
+  description: Покакать
+  usage: /poop
+  executable by: players
+  trigger:
+    send "&a☽ » Вы успешно обосрались." to player
+    set {_x} to x coordinate of event-player
+    set {_y} to y coordinate of event-player
+    set {_z} to z coordinate of event-player
+    execute console command "execute at %event-player% run particle minecraft:falling_honey %{_x}% %{_y}% %{_z}% 0.2 0.1 0.2 0 2000 force @a"
