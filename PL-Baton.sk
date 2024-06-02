@@ -1,0 +1,14 @@
+on damage of player by player:
+  if attacker is holding a wooden sword:
+    if name of attacker's tool is "Полицейская дубинка":
+      if attacker has permission "baton.use":
+        set {razcol::%victim%::baton} to difference between {cooldown::%victim%::baton} and now
+        if {razcol::%victim%::baton} is not less than 15 seconds:
+          force victim to sleep at location of victim
+          # apply potion of blindness of tier 255 without any particles whilst hiding the potion icon to the victim for 100 ticks
+          # apply potion of slowness of tier 255 without any particles whilst hiding the potion icon to the victim for 100 ticks
+          # apply potion of mining fatigue of tier 255 without any particles whilst hiding the potion icon to the victim for 100 ticks
+          # apply potion of weakness of tier 255 without any particles whilst hiding the potion icon to the victim for 100 ticks
+          # set {cooldown::%victim%::baton} to now
+      else:
+        cancel event
