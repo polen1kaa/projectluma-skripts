@@ -1,0 +1,20 @@
+command /sign:
+    description: Подписать предмет
+    usage: /sign
+    executable by: players
+    trigger:
+        if lore of player's held item contains "&8&o##%player%":
+            send "&c☽ » Этот предмет уже подписан вами." to player
+        else if tool of player is not air:
+            if player's off hand tool is a feather:
+                if player has ink sac in the inventory:
+                    add "&8&o##%player%" to the lore of the player's tool
+                    send "&a☽ » Вы успешно подписали предмет." to player
+                    remove 1 ink sac from the inventory of player
+                    play sound "minecraft:entity.villager.work_cartographer" with volume 3 to the player
+                else:
+                    send "&c☽ » У вас нету чернил в инвентаре чтобы подписать предмет." to player
+            if player's off hand tool is not feather:
+                send "&c☽ » У вас нету пера чтобы подписать предмет." to player
+        if tool of player is air:
+            send "&c☽ » У вас в руках нет предмета, который можно подписать." to player
