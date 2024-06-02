@@ -13,8 +13,8 @@
 ## Как запустить скрипты?
 1. Установите плагины [Skipt](https://www.spigotmc.org/resources/skript.114544/), [SKBee](https://www.spigotmc.org/resources/skbee-skript-addon.75839/).
 2. Запустите ваш сервер. Если плагины запустились, продолжайте следовать гайду.
-3. Загрузите скрипты в путь plugins/Skript/scripts.
-4. Напишите плагин Skript следующей командой:
+3. Загрузите скрипты в путь plugins/Skript/scripts/.
+4. Перезапустите плагин Skript следующей командой:
 ```
 /skript reload all.
 ```
