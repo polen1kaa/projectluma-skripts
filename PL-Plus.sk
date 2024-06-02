@@ -1,0 +1,26 @@
+command /plus:
+  usage: &c☽ » Используйте: /plus
+  trigger:
+    if {plusprod::%player's uuid%} is not set:
+      set {plusprod::%player's uuid%} to 0
+    if {plusprod::%player's uuid%} = 0:
+      set {prod} to "&c0"
+    else:
+      set {prod} to "&a%{plusprod::%player's uuid%}%"
+    if player has permission "pl.plus":
+      set {status} to "&aАктивно"
+      if {plus::%player's uuid%} is not set:
+        set {time} to "&aНе ограничено"
+      else:
+        set {time} to {plus::%player's uuid%} - unix timestamp of now
+    else:
+      set {status} to "&cНе активно"
+      set {time} to "&c0 дней"
+    set metadata tag "plus" of player to chest inventory with 3 rows named "Меню подписки"
+    set slot 13 of metadata tag "plus" of player to skull of player named "&x&0&0&7&8&F&EПрофиль %player's display name%" with lore "&r" and "&7Статус: %{status}%" and "&7Осталось: %{time}%" and "&7Доступно продлений: %{prod}%" and "&r"
+    set slot 11 of metadata tag "plus" of player to skull of player named "&aПродлить подписку"
+    set slot 15 of metadata tag "plus" of player to skull of player with custom nbt "{SkullOwner:{Id:[I;560730361,-2039592014,-1344041958,-1058039007],Properties:{"textures":{"SKIN":{"url":"http://textures.minecraft.net/texture/86d35a963d5987894b6bc214e328b39cd2382426ff9c8e082b0b6a6e044d3a3"}}}}}" named "&cОтменить подписку"
+    open (metadata tag "plus" of player) to player
+on inventory click:
+  if event-inventory = (metadata tag "plus" of player):
+    cancel event
