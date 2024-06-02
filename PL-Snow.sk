@@ -1,0 +1,40 @@
+# PLSnowball от polenikaa
+# Зависимости: нет
+on rightclick on snow layer:
+  if player's tool is air:
+    set {_x} to x coordinate of event-block
+    set {_y} to y coordinate of event-block
+    set {_z} to z coordinate of event-block
+    execute console command "minecraft:execute at %player% if block %{_x} - 0.5% %{_y} - 0.5% %{_z} - 0.5% snow[layers=1] run setblock %{_x} - 0.5% %{_y} - 0.5% %{_z} - 0.5% minecraft:air"
+    execute console command "minecraft:execute at %player% if block %{_x} - 0.5% %{_y} - 0.5% %{_z} - 0.5% snow[layers=2] run setblock %{_x} - 0.5% %{_y} - 0.5% %{_z} - 0.5% minecraft:snow[layers=1]"
+    execute console command "minecraft:execute at %player% if block %{_x} - 0.5% %{_y} - 0.5% %{_z} - 0.5% snow[layers=3] run setblock %{_x} - 0.5% %{_y} - 0.5% %{_z} - 0.5% minecraft:snow[layers=2]"
+    execute console command "minecraft:execute at %player% if block %{_x} - 0.5% %{_y} - 0.5% %{_z} - 0.5% snow[layers=4] run setblock %{_x} - 0.5% %{_y} - 0.5% %{_z} - 0.5% minecraft:snow[layers=3]"
+    execute console command "minecraft:execute at %player% if block %{_x} - 0.5% %{_y} - 0.5% %{_z} - 0.5% snow[layers=5] run setblock %{_x} - 0.5% %{_y} - 0.5% %{_z} - 0.5% minecraft:snow[layers=4]"
+    execute console command "minecraft:execute at %player% if block %{_x} - 0.5% %{_y} - 0.5% %{_z} - 0.5% snow[layers=6] run setblock %{_x} - 0.5% %{_y} - 0.5% %{_z} - 0.5% minecraft:snow[layers=5]"
+    execute console command "minecraft:execute at %player% if block %{_x} - 0.5% %{_y} - 0.5% %{_z} - 0.5% snow[layers=7] run setblock %{_x} - 0.5% %{_y} - 0.5% %{_z} - 0.5% minecraft:snow[layers=6]"
+    execute console command "minecraft:execute at %player% if block %{_x} - 0.5% %{_y} - 0.5% %{_z} - 0.5% snow[layers=8] run setblock %{_x} - 0.5% %{_y} - 0.5% %{_z} - 0.5% minecraft:snow[layers=7]"
+    drop 1 snowball
+on rightclick on snow block:
+  if player's tool is air:
+    break clicked block naturally
+on projectile collide:
+  if shooter is set:
+    if shooter is a player:
+      if event-entity is player:
+        if event-projectile is snowball:
+          knock event-entity (vector from shooter to event-entity)
+on projectile hit:
+  if shooter is a player:
+    if event-projectile is snowball:
+      set {_x} to x coordinate of event-projectile
+      set {_y} to y coordinate of event-projectile
+      set {_z} to z coordinate of event-projectile
+      set {_snowcha} to a random integer from 1 and 100
+      if {_snowcha} <= 15:
+        execute console command "minecraft:execute at %shooter's display name% run particle dust 0.81 0.76 0.16 5 %{_x}% %{_y}% %{_z}% 0.2 0.2 0.2 0.02 20 force @a"
+      else:
+        execute console command "minecraft:execute at %shooter's display name% run particle dust 1 1 1 3 %{_x}% %{_y}% %{_z}% 0.2 0.2 0.2 0 20 force @a"
+      if event-block is any stained glass pane:
+        break event-block naturally
+      if event-block is glass pane:
+        break event-block naturally
