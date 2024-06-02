@@ -1,0 +1,24 @@
+# PLHello v1.0.0. by polenikaa
+command /hello <string>:
+  usage: &c☽ » Используйте: /hello <сообщение>
+  permission: pl.hello
+  permission message: &c☽ » У вас нет прав на использование этой команды.
+  cooldown: 10 minutes
+  cooldown message: &c☽ » Менять сообщение о входе можно только раз в 10 минут.
+  cooldown bypass: pl.hello.bypass
+  trigger:
+    set {hello::%player's uuid%} to arg-1
+    replace all "&" with "" in {hello::%player's uuid%}
+    replace all "<" with "" in {hello::%player's uuid%}
+    replace all ">" with "" in {hello::%player's uuid%}
+    send "&a☽ » Вы успешно сменили приветсвенное сообщение на «%{hello::%player's uuid%}%»." to player
+on join:
+  if player has permission "pl.hello":
+    if {hello::%player's uuid%} is set:
+      broadcast "&e%player% %{hello::%player's uuid%}%"
+    else:
+      broadcast "&e%player% присоединился к игре"
+  else:
+    broadcast "&e%player% присоединился к игре"
+on quit:
+  broadcast "&e%player% покинул игру"
