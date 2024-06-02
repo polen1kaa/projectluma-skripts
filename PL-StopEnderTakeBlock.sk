@@ -1,0 +1,2 @@
+on enderman pickup:
+	cancel event
