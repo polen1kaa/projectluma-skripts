@@ -1,0 +1,2 @@
+on command "/sign":
+	execute console command "advancement grant %event-player% only luma:lumaadv/sign"
