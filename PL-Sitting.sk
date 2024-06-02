@@ -1,0 +1,8 @@
+on rightclick on a player:
+    if entity's helmet is saddle:
+        make the player ride the clicked entity
+on rightclick on entity:
+    if player is holding a saddle:
+        if clicked entity is not a player:
+            if player has permission "sitmob.use":
+                make the player ride the clicked entity
