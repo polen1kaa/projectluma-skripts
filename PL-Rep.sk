@@ -1,0 +1,40 @@
+on connect:
+  if {plrep::%player's display name%} is not set:
+    set {plrep::%player's display name%} to 0
+on tab complete:
+    event-string is "/rep"
+    set tab completions for position 1 to "add" and "remove"
+    set tab completions for position 2 to all players
+command /rep <string> <string>:
+  usage: &c☽ » Используйте: /rep <add|remove> <игрок>
+  cooldown: 10 minutes
+  cooldown message: &c☽ » Изменять репутацию можно только один раз в 10 минут.
+  cooldown bypass: *
+  trigger:
+    set {_player} to arg-2 parsed as player
+    if arg-1 is "add":
+      if arg-2 is not player's display name or "kapystik":
+        if {_player} is online:
+          add 1 to {plrep::%arg-2%}
+          send "&a☽ » Репутация игрока %arg-2% изменена до %{plrep::%arg-2%}%." to player
+        else:
+          send "&c☽ » Указанный игрок находится не в онлайне." to player
+          cancel the cooldown
+      else:
+        send "&c☽ » Нельзя изменять репутацию самого себя." to player
+        cancel the cooldown
+    else:
+      if arg-1 is "remove":
+        if arg-2 is not player's display name or "kapystik":
+          if {_player} is online:
+            remove 1 from {plrep::%arg-2%}
+            send "&a☽ » Репутация игрока %arg-2% изменена до %{plrep::%arg-2%}%." to player
+          else:
+            send "&c☽ » Указанный игрок находится не в онлайне." to player
+            cancel the cooldown
+        else:
+          send "&c☽ » Нельзя изменять репутацию самого себя." to player
+          cancel the cooldown
+      else:
+        send "&c☽ » Используйте: /rep <add|remove> <игрок>" to player
+        cancel the cooldown
