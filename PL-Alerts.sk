@@ -1,0 +1,60 @@
+command /bc-action <string> <string>:
+	usage: &c☽ » Используйте: /bc-action <сообщение>
+	permission: pl.alert
+	trigger:
+		if {toggle::%player's uuid%} is not set:
+			set {toggle::%player's uuid%} to 0
+		set {name} to arg-1
+		if {name} is "всем":
+			if {toggle::%player's uuid%} is 0: 
+				send action bar "&aВам" to all players
+				play sound "minecraft:block.amethyst_block.fall" to all players
+				wait 0.25 seconds
+				send action bar "&aВам при" to all players
+				play sound "minecraft:block.amethyst_block.hit" to all players
+				wait 0.25 seconds
+				send action bar "&aВам пришло" to all players
+				play sound "minecraft:block.amethyst_block.step" to all players
+				wait 0.50 seconds
+				play sound "minecraft:block.bell.use" to all players
+				send action bar "&aОповещение!" to all players
+				wait 2 seconds
+				play sound "minecraft:block.copper.break" to all players
+				send action bar "&a%arg-2%" to all players
+		if {toggle::%player's uuid%} is 0:
+			send action bar "&aВам" to player("%arg-1%")
+			play sound "minecraft:block.amethyst_block.fall" to player("%arg-1%")
+			wait 0.25 seconds
+			send action bar "&aВам при" to player("%arg-1%")
+			play sound "minecraft:block.amethyst_block.hit" to player("%arg-1%")
+			wait 0.25 seconds
+			send action bar "&aВам пришло" to player("%arg-1%")
+			play sound "minecraft:block.amethyst_block.step" to player("%arg-1%")
+			wait 0.50 seconds
+			play sound "minecraft:block.bell.use" to player("%arg-1%")
+			send action bar "&aОповещение!" to player("%arg-1%")
+			wait 2 seconds
+			play sound "minecraft:block.copper.break" to player("%arg-1%")
+			send action bar "&a%arg-2%" to player("%arg-1%")
+command /bc-toggle <string>:
+	usage: &c☽ » Используйте: /bc-toggle on/off 
+	trigger:
+		if {toggle::%player's uuid%} is not set:
+			set {toggle::%player's uuid%} to 0
+		if {toggle::%player's uuid%} is 0:
+			set {toggle::%player's uuid%} to 1
+			send "&a☽ » Вы отключили оповещения над инвентарём."
+		else:
+			if {toggle::%player's uuid%} is 1: 
+				set {toggle::%player's uuid%} to 0
+				send "&a☽ » Вы включили оповещения над инвентарём."
+command /bc <string>:
+  usage: &c☽ » Используйте: /bc <сообщение>
+  permission: pl.alert
+  trigger:
+    play sound "minecraft:block.amethyst_block.fall" to all players
+    wait 0.15 seconds
+    play sound "minecraft:block.amethyst_block.hit" to all players
+    wait 0.5 seconds
+    play sound "minecraft:block.copper.break" to all players
+    send "&a☽ » Оповещение: %arg-1%" to all players
