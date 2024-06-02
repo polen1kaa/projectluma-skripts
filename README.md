@@ -16,5 +16,5 @@
 3. Загрузите скрипты в путь plugins/Skript/scripts/.
 4. Перезапустите плагин Skript следующей командой:
 ```
-/skript reload all.
+/skript reload all
 ```
