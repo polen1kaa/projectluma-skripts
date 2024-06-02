@@ -1,0 +1,6 @@
+# PLPush v1.0.0. by polenikaa
+on rightclick on a player:
+  if target entity is sneaking:
+    if player is sneaking:
+      push the player upwards with force 0.8
+      # knock player (vector from target entity to player)
