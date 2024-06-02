@@ -1,0 +1,14 @@
+command /hat:
+    description: Надеть предмет на голову
+    usage: /hat
+    executable by: players
+    trigger:
+        if tool of player is not air:
+            if player's helmet is not air:
+                send "&c☽ » Вы уже надели шлем. Снимите его, зачем вам две шляпы?" to player
+            else:
+                equip player with tool of player
+                set tool of player to air
+                send "&a☽ » Вы успешно надели предмет. Радуйтесь новой шляпке." to player
+        else:
+            send "&c☽ » У вас в руках нет предмета, который можно надеть." to player
