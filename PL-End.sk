@@ -1,0 +1,10 @@
+every 2 seconds:
+  set {_x} to x coordinate of player("misterkapysta")
+  set {_y} to y coordinate of player("misterkapysta")
+  set {_z} to z coordinate of player("misterkapysta")
+  execute console command "execute at misterkapysta run particle minecraft:dragon_breath %{_x}% %{_y}+0.3% %{_z}% 0.35 0.8 0.35 0.00000001 25 force @a"
+  execute console command "execute at misterkapysta run particle minecraft:portal %{_x}% %{_y}+0.3% %{_z}% 0.35 0.8 0.35 0.00000001 10 force @a"
+  set {_x} to x coordinate of player("bjej_")
+  set {_y} to y coordinate of player("bjej_")
+  set {_z} to z coordinate of player("bjej_")
+  execute console command "execute at bjej_ run particle minecraft:dragon_breath %{_x}% %{_y}+0.3% %{_z}% 0.35 0.8 0.35 0.00000001 25 force @a"
