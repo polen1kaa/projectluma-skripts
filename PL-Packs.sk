@@ -1,0 +1,6 @@
+# PL-Packs by polenikaa
+on join:
+  send the resource pack from "http://cdn.prlu.ru/Luma_Pack_3.5.zip" to the player
+on resource pack request response:
+  if the resource pack was declined or failed to download:
+    kick the player due to "&cРесурс-пак обязателен для игры на сервере. Пожалуйста, согласитесь с установкой."
