@@ -1,0 +1,224 @@
+on join:
+  set {grenactive::%uuid of player%} to 0
+  set {grentype::%uuid of player%} to 0
+
+on rightclick holding a lingering potions of awkward:
+  if {grenactive::%uuid of player%} = 1:
+    set {grenactive::%uuid of player%} to 0
+    set {grentype::%uuid of player%} to 0
+  if player is holding event-item with name "Газовая граната":
+    if {grentype::%uuid of player%} = 0:
+      set {grenactive::%uuid of player%} to 1
+      set {grentype::%uuid of player%} to 1
+    else:
+      # send "&c☽ » Бросать гранату сейчас нельзя. Дождись взрыва прошлого снаряда." to player
+      cancel event
+on rightclick holding a splash potion:
+  if {grenactive::%uuid of player%} = 1:
+    set {grenactive::%uuid of player%} to 0
+    set {grentype::%uuid of player%} to 0
+  if player is holding event-item with name "Граната-колотушка":
+    if {grentype::%uuid of player%} = 0:
+      set {grenactive::%uuid of player%} to 1
+      set {grentype::%uuid of player%} to 2
+    else:
+      # send "&c☽ » Бросать гранату сейчас нельзя. Дождись взрыва прошлого снаряда." to player
+      cancel event
+  if player is holding event-item with name "Осколочная граната":
+    if {grentype::%uuid of player%} = 0:
+      set {grenactive::%uuid of player%} to 1
+      set {grentype::%uuid of player%} to 3
+    else:
+      # send "&c☽ » Бросать гранату сейчас нельзя. Дождись взрыва прошлого снаряда." to player
+      cancel event
+  if player is holding event-item with name "Коктейль молотова":
+    if {grentype::%uuid of player%} = 0:
+      set {grenactive::%uuid of player%} to 1
+      set {grentype::%uuid of player%} to 4
+    else:
+      # send "&c☽ » Бросать гранату сейчас нельзя. Дождись взрыва прошлого снаряда." to player
+      cancel event
+  if player is holding event-item with name "Световая граната":
+    if {grentype::%uuid of player%} = 0:
+      set {grenactive::%uuid of player%} to 1
+      set {grentype::%uuid of player%} to 5
+    else:
+      # send "&c☽ » Бросать гранату сейчас нельзя. Дождись взрыва прошлого снаряда." to player
+      cancel event
+  if player is holding event-item with name "Банкате":
+    if {grentype::%uuid of player%} = 0:
+      set {grenactive::%uuid of player%} to 1
+      set {grentype::%uuid of player%} to 6
+    else:
+      # send "&c☽ » Бросать гранату сейчас нельзя. Дождись взрыва прошлого снаряда." to player
+      cancel event
+
+on shoot:
+  if {grenactive::%uuid of shooter%} = 1:
+    set {grenactive::%uuid of shooter%} to 2
+    set {_x} to x coordinate of shooter
+    set {_y} to y coordinate of shooter
+    set {_z} to z coordinate of shooter
+    execute console command "execute at %shooter% run playsound minecraft:item.trident.throw ambient @a[distance=..8,x=%{_x}%,y=%{_y}%,z=%{_z}%] ~ ~ ~ 0.5 1.5"
+    execute console command "execute at %shooter% run particle minecraft:sweep_attack %{_x}% %{_y} + 1.1% %{_z}% 0.3 0.3 0.3 0 3 force @a"
+  else:
+    set {grenactive::%uuid of shooter%} to 0
+
+on projectile hit:
+  if {grenactive::%uuid of shooter%} = 2:
+    if {grenactive::%uuid of shooter%} > 0:
+      set {_x} to x coordinate of event-projectile
+      set {_y} to y coordinate of event-projectile
+      set {_z} to z coordinate of event-projectile
+      if {grentype::%uuid of shooter%} = 1:
+        if projectile is thrown lingering potion:
+          set {grenactive::%uuid of shooter%} to 0
+          set {grentype::%uuid of shooter%} to 0
+          execute console command "execute at %shooter% run particle minecraft:campfire_signal_smoke %{_x}% %{_y}% %{_z}% 2.2 2.2 2.2 0 3500 force @a"
+          # execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:smoke,Potion:awkward,Radius:4,RadiusPerTick:0,Duration:235,effects:[{id:poison,duration:50,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run playsound minecraft:entity.generic.extinguish_fire ambient @a[distance=..32,x=%{_x}%,y=%{_y}%,z=%{_z}%] ~ ~ ~ 0.5 0.1"
+      if {grentype::%uuid of shooter%} = 2:
+        if projectile is thrown potion:
+          set {grenactive::%uuid of shooter%} to 0
+          set {grentype::%uuid of shooter%} to 0
+          execute console command "execute at %shooter% run particle minecraft:lava %{_x}% %{_y}% %{_z}% 2 2 2 0 300 force @a"
+          execute console command "execute at %shooter% run particle minecraft:explosion_emitter %{_x}% %{_y}% %{_z}% 2 2 2 0 3 force @a"
+          # execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:explosion,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:10,effects:[{id:instant_damage,duration:10,amplifier:2,show_particles:0b}]}"
+          execute console command "execute at %shooter% run playsound minecraft:entity.generic.explode ambient @a[distance=..32,x=%{_x}%,y=%{_y}%,z=%{_z}%] ~ ~ ~ 0.5 1.2"
+          execute console command "execute at %shooter% run effect give @e[distance=..4.1,x=%{_x}%,y=%{_y}%,z=%{_z}%] minecraft:instant_damage 1 1"
+      if {grentype::%uuid of shooter%} = 3:
+        if projectile is thrown potion:
+          set {grenactive::%uuid of shooter%} to 0
+          set {grentype::%uuid of shooter%} to 0
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:smoke,Potion:awkward,Radius:7,RadiusPerTick:0,Duration:10,effects:[{id:slowness,duration:150,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run particle minecraft:explosion_emitter %{_x}% %{_y}% %{_z}% 2 2 2 0 3 force @a"
+          execute console command "execute at %shooter% run particle minecraft:explosion_emitter %{_x} - 5% %{_y}% %{_z}% 2 2 2 0 3 force @a"
+          execute console command "execute at %shooter% run particle minecraft:explosion_emitter %{_x} + 5% %{_y}% %{_z}% 2 2 2 0 3 force @a"
+          execute console command "execute at %shooter% run particle minecraft:explosion_emitter %{_x}% %{_y}% %{_z} - 5% 2 2 2 0 3 force @a"
+          execute console command "execute at %shooter% run particle minecraft:explosion_emitter %{_x}% %{_y}% %{_z} + 5% 2 2 2 0 3 force @a"
+          execute console command "execute at %shooter% run execute at %shooter% run playsound minecraft:entity.generic.explode ambient @a[distance=..32,x=%{_x}%,y=%{_y}%,z=%{_z}%] ~ ~ ~ 0.5 1.2"
+      if {grentype::%uuid of shooter%} = 4:
+        if projectile is thrown potion:
+          set {grenactive::%uuid of shooter%} to 0
+          set {grentype::%uuid of shooter%} to 0
+          execute console command "execute at %shooter% run particle minecraft:lava %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run particle minecraft:flame %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run particle minecraft:landing_lava %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:10,effects:[{id:poison,duration:300,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:6,effects:[{id:instant_damage,duration:10,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run particle minecraft:lava %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run playsound minecraft:entity.generic.extinguish_fire ambient @a[distance=..32,x=%{_x}%,y=%{_y}%,z=%{_z}%] ~ ~ ~ 0.2 1"
+          wait 1 seconds
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:10,effects:[{id:poison,duration:300,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:6,effects:[{id:instant_damage,duration:10,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run particle minecraft:flame %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run particle minecraft:landing_lava %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run playsound minecraft:entity.generic.extinguish_fire ambient @a[distance=..32,x=%{_x}%,y=%{_y}%,z=%{_z}%] ~ ~ ~ 0.2 1"
+          wait 1 seconds
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:10,effects:[{id:poison,duration:300,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:6,effects:[{id:instant_damage,duration:10,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run particle minecraft:flame %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run particle minecraft:landing_lava %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run playsound minecraft:entity.generic.extinguish_fire ambient @a[distance=..32,x=%{_x}%,y=%{_y}%,z=%{_z}%] ~ ~ ~ 0.2 1"
+          wait 1 seconds
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:10,effects:[{id:poison,duration:300,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:6,effects:[{id:instant_damage,duration:10,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run particle minecraft:flame %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run particle minecraft:landing_lava %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run playsound minecraft:entity.generic.extinguish_fire ambient @a[distance=..32,x=%{_x}%,y=%{_y}%,z=%{_z}%] ~ ~ ~ 0.2 1"
+          wait 1 seconds
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:10,effects:[{id:poison,duration:300,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:6,effects:[{id:instant_damage,duration:10,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run particle minecraft:flame %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run particle minecraft:landing_lava %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run playsound minecraft:entity.generic.extinguish_fire ambient @a[distance=..32,x=%{_x}%,y=%{_y}%,z=%{_z}%] ~ ~ ~ 0.2 1"
+          wait 1 seconds
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:10,effects:[{id:poison,duration:300,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:6,effects:[{id:instant_damage,duration:10,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run particle minecraft:flame %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run particle minecraft:landing_lava %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run playsound minecraft:entity.generic.extinguish_fire ambient @a[distance=..32,x=%{_x}%,y=%{_y}%,z=%{_z}%] ~ ~ ~ 0.2 1"
+          wait 1 seconds
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:10,effects:[{id:poison,duration:300,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:6,effects:[{id:instant_damage,duration:10,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run particle minecraft:flame %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run particle minecraft:landing_lava %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run playsound minecraft:entity.generic.extinguish_fire ambient @a[distance=..32,x=%{_x}%,y=%{_y}%,z=%{_z}%] ~ ~ ~ 0.2 1"
+          wait 1 seconds
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:10,effects:[{id:poison,duration:300,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run summon area_effect_cloud%{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:6,effects:[{id:instant_damage,duration:10,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run particle minecraft:flame %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run particle minecraft:landing_lava %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run playsound minecraft:entity.generic.extinguish_fire ambient @a[distance=..32,x=%{_x}%,y=%{_y}%,z=%{_z}%] ~ ~ ~ 0.2 1"
+          wait 1 seconds
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:10,effects:[{id:poison,duration:300,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:6,effects:[{id:instant_damage,duration:10,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run particle minecraft:flame %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run particle minecraft:landing_lava %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run playsound minecraft:entity.generic.extinguish_fire ambient @a[distance=..32,x=%{_x}%,y=%{_y}%,z=%{_z}%] ~ ~ ~ 0.2 1"
+          wait 1 seconds
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:10,effects:[{id:poison,duration:300,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:6,effects:[{id:instant_damage,duration:10,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run particle minecraft:flame %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run particle minecraft:landing_lava %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run playsound minecraft:entity.generic.extinguish_fire ambient @a[distance=..32,x=%{_x}%,y=%{_y}%,z=%{_z}%] ~ ~ ~ 0.2 1"
+          wait 1 seconds
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:10,effects:[{id:poison,duration:300,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:6,effects:[{id:instant_damage,duration:10,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run particle minecraft:flame %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run particle minecraft:landing_lava %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run playsound minecraft:entity.generic.extinguish_fire ambient @a[distance=..32,x=%{_x}%,y=%{_y}%,z=%{_z}%] ~ ~ ~ 0.2 1"
+          wait 1 seconds
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:10,effects:[{id:poison,duration:300,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:6,effects:[{id:instant_damage,duration:10,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run particle minecraft:flame %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run particle minecraft:landing_lava %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run playsound minecraft:entity.generic.extinguish_fire ambient @a[distance=..32,x=%{_x}%,y=%{_y}%,z=%{_z}%] ~ ~ ~ 0.2 1"
+          wait 1 seconds
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:10,effects:[{id:poison,duration:300,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:6,effects:[{id:instant_damage,duration:10,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run particle minecraft:flame %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run particle minecraft:landing_lava %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run playsound minecraft:entity.generic.extinguish_fire ambient @a[distance=..32,x=%{_x}%,y=%{_y}%,z=%{_z}%] ~ ~ ~ 0.2 1"
+          wait 1 seconds
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:10,effects:[{id:poison,duration:300,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:6,effects:[{id:instant_damage,duration:10,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run particle minecraft:flame %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run particle minecraft:landing_lava %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run playsound minecraft:entity.generic.extinguish_fire ambient @a[distance=..32,x=%{_x}%,y=%{_y}%,z=%{_z}%] ~ ~ ~ 0.2 1"
+          wait 1 seconds
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:10,effects:[{id:poison,duration:300,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:6,effects:[{id:instant_damage,duration:10,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run particle minecraft:flame %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run particle minecraft:landing_lava %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run playsound minecraft:entity.generic.extinguish_fire ambient @a[distance=..32,x=%{_x}%,y=%{_y}%,z=%{_z}%] ~ ~ ~ 0.2 1"
+          wait 1 seconds
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:10,effects:[{id:poison,duration:300,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:6,effects:[{id:instant_damage,duration:10,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run particle minecraft:flame %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run particle minecraft:landing_lava %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run playsound minecraft:entity.generic.extinguish_fire ambient @a[distance=..32,x=%{_x}%,y=%{_y}%,z=%{_z}%] ~ ~ ~ 0.2 1"
+          wait 1 seconds
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:10,effects:[{id:poison,duration:300,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flame,Potion:awkward,Radius:3,RadiusPerTick:0,Duration:6,effects:[{id:instant_damage,duration:10,amplifier:1,show_particles:0b}]}"
+          execute console command "execute at %shooter% run particle minecraft:flame %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run particle minecraft:landing_lava %{_x}% %{_y}% %{_z}% 2 0.01 2 0 300 force @a"
+          execute console command "execute at %shooter% run playsound minecraft:entity.generic.extinguish_fire ambient @a[distance=..32,x=%{_x}%,y=%{_y}%,z=%{_z}%] ~ ~ ~ 0.2 1"
+      if {grentype::%uuid of shooter%} = 5:
+        if projectile is thrown potion:
+          set {grenactive::%uuid of shooter%} to 0
+          set {grentype::%uuid of shooter%} to 0
+          execute console command "execute at %shooter% run particle minecraft:flash %{_x}% %{_y}% %{_z}% 15 15 15 0 12000 force @a"
+          # execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y}% %{_z}% {Particle:flash,Potion:awkward,Radius:20,Duration:10,effects:[{id:,duration:300,amplifier:2,show_particles:0b}]}"
+          execute console command "execute at %shooter% run playsound minecraft:entity.allay.death ambient @a[distance=..15,x=%{_x}%,y=%{_y}%,z=%{_z}%] ~ ~ ~ 3 2"
+          execute console command "execute at %shooter% run effect give @e[distance=..23,x=%{_x}%,y=%{_y}%,z=%{_z}%] minecraft:blindness 10 1 true"
+          execute console command "execute at %shooter% run effect give @e[distance=..10,x=%{_x}%,y=%{_y}%,z=%{_z}%] minecraft:slowness 5 1 true"
+      if {grentype::%uuid of shooter%} = 6:
+        if projectile is thrown potion:
+          set {grenactive::%uuid of shooter%} to 0
+          set {grentype::%uuid of shooter%} to 0
+          execute console command "execute at %shooter% run particle dust 0.88 0.73 0.1 2 %{_x}% %{_y}% %{_z}% 4 4 4 6 1999 force @a"
+          execute console command "execute at %shooter% run particle dust 0.88 0.73 0.1 4.5 %{_x}% %{_y}% %{_z}% 2 2 2 4 1999 force @a"
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y} + 0.2% %{_z}% {Particle:""dust 0.89 0.77 0.13 10"",Radius:4,Duration:8,effects:[{id:instant_damage,duration:100,show_particles:0b}]}"
+          execute console command "execute at %shooter% run summon area_effect_cloud %{_x}% %{_y} + 0.3% %{_z}% {Particle:""dust 0.89 0.77 0.13 1"",Radius:4,Duration:198,effects:[{id:glowing,duration:250,show_particles:0b}]}"
+      # Новые гранаты
